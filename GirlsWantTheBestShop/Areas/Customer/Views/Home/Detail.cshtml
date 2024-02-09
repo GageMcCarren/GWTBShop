@@ -1,0 +1,67 @@
+﻿@model GirlsWantTheBestShop.Models.Product
+@{
+    ViewData["Title"] = "Details";
+}
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var products = HttpContextAccessor.HttpContext.Session.Get<List<Product>>("products");
+    var product = products?.FirstOrDefault(c => c.Id == Model.Id);
+}
+<br />
+
+
+<form asp-action="Detail" method="post" enctype="multipart/form-data">
+
+    <div class="p-4  row">
+        <div class="col-md-6">
+            <h3 class="detail-name">@Model.Name</h3>
+            <img src="~/@Model.Image" class="custom-product-image img-fluid mb-3" alt="@Model.Name">
+        </div>
+
+
+
+
+
+        <div class="col-md-6 detail-content">
+            <p class="detail-description">@Model.Description</p>
+            <div class="price-cart-container">
+
+                <div class="form-group row">
+                    <div class="col-4">
+                    </div>
+                    <p class="detail-price">$@Model.Price</p>
+                    @if (product != null)
+                    {
+                        <button type="submit" class="btn btn-danger form-control" asp-action="Remove" asp-route-id="@Model.Id">Remove to Cart</button>
+                    }
+                    else
+                    {
+                        <input type="submit" class="btn btn-info form-control" value="Add to Cart" />
+                    }
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-12 mt-3">
+            <a asp-action="ProductPage" class="btn btn-success">Back to List</a>
+        </div>
+    </div>
+
+</form>
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

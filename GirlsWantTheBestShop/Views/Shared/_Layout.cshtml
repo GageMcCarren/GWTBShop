@@ -1,0 +1,158 @@
+﻿@using System.Net.Http
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var userRole = HttpContextAccessor.HttpContext.Session.GetString("roleName"); 
+    int count = 0;
+    List<Product> products = null;
+    string serializedProducts = HttpContextAccessor.HttpContext.Session.GetString("products");
+    if (!string.IsNullOrEmpty(serializedProducts))
+    {
+        products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(serializedProducts);
+        count = products.Count();
+    }
+    else
+    {
+        products = new List<Product>(); 
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GirlsWantTheBestShop</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    </environment>
+    <environment exclude="Development">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+    </environment>
+    
+    <link rel="stylesheet" href="~/css/landing-page.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
+   
+    
+
+
+    <link rel="stylesheet" href="~/GirlsWantTheBestShop.styles.css" asp-append-version="true" />
+    <style>
+        .error{
+            color:red;
+        }
+    </style>
+   
+
+
+</head>
+<body class="no-scroll">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light navbar-custom-margin">
+            <div class="container-fluid header">
+
+                <div class="header-left">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+
+                        <img class="logo-icon image-overlay" src="/Images/LogoImage/Glwttebt.png" />
+
+                    </a>
+                   
+
+                    
+
+
+                </div>
+                <div>
+                    <div class="title-icon-container">
+                        <img class="title-icon desktop-title" src="/Images/LogoImage/TitleHeader.png" />
+
+
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                            <img class="title-icon mobile-title" src="/Images/Icons/GWTB.Title.png" />
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                    aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+
+                        </a>
+                        
+                    </div>
+                    </div>
+                    
+
+               
+
+
+
+                <div class="cart-container">
+                    <a class="nav-link text-dark" asp-area="Customer" asp-controller="Home" asp-action="Cart">
+                        <i class="fa-solid fa-cart-shopping fa-xl"></i>
+                        (@count)
+
+                    </a>
+                </div>
+
+             
+                   
+                    <partial name="_LoginPartial" />
+               
+               
+
+            </div>
+        </nav>
+    </header>
+   
+
+    <div class="sidebar-container">
+        <a class="btn-custom" asp-area="Customer" asp-controller="Home" asp-action="ProductPage">Products</a>
+        <a class="btn-custom" asp-area="Customer" asp-controller="Home" asp-action="About">About</a>
+    </div>
+   
+
+
+
+
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer text-muted">
+        <div class="container">
+            &copy; 2023 - Girls Want The Best</a>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://kit.fontawesome.com/0b5a85c2f6.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

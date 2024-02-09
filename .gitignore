@@ -1,0 +1,62 @@
+# Binaries and Object files
+*.exe
+*.dll
+*.so
+*.o
+*.obj
+
+# Build folders
+bin/
+obj/
+out/
+build/
+Release/
+Debug/
+
+# Package folders
+packages/
+node_modules/
+
+# VS Code settings
+.vscode/
+
+# Visual Studio settings and cache
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+
+# Temporary files
+*.[Cc]ache
+*.[Tt]mp
+*.[Ll]og
+*.[Bb]ak
+*.[Tt]mp_proj
+*.tmp
+*.temp
+*.tlog
+*.log
+*.vsix
+
+# ReSharper
+_ReSharper*/
+*.[Rr]esharper
+
+# User-specific files
+*.rsuser
+
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+# Others
+.DS_Store
+Thumbs.db
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
+*.usersecrets/

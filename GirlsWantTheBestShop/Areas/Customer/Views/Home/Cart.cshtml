@@ -1,0 +1,106 @@
+﻿@using GirlsWantTheBestShop.Models
+@model List<Product>
+@{
+    ViewData["Title"] = "Cart"; 
+
+
+}
+
+
+
+<br/>
+<div class="row">
+
+
+    <div class="table-container">
+        <table class="table" style="border: none; ">
+            <thead>
+                <tr>
+                    
+                    <th class ="product-name">Name</th>
+
+                    <th class="product-name">Description</th>
+                    <td class="product-name">Quantity</td>
+                    <td class="product-name">Price</td>
+                    <td class="product-name"></td>
+
+                </tr>
+
+
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                       
+                        <td class="checkout-text">@item.Name</td>
+
+                        <td class="checkout-text">@item.Description</td>
+
+                        <td>
+                            <form asp-action="UpdateQuantity" asp-controller="Home" method="post">
+                            <input type="hidden" name="id" value="@item.Id" />
+                             <select name="newQuantity" onchange="this.form.submit()">
+                                    @for (int i = 1; i <= 10; i++)
+                                    {
+                                        if (item.Quantity == i)
+                                        {
+                                            <option value="@i" selected>@i</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+                                    }
+                              </select>
+                            </form>
+                        </td>
+                        <td><span class="line-price checkout-text" data-id="@item.Id">$@String.Format("{0:0.00}", item.Price * (item.Quantity > 0 ? item.Quantity : 1))</span></td>
+
+                        <td>
+                            <a asp-action="Remove" asp-controller="Home" asp-route-id="@item.Id" class="btn btn-danger">
+                                Remove
+                            </a>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+
+
+        </table>
+
+    </div>
+
+   
+
+
+</div>
+
+<div class="row">
+
+    <div class="col-6">
+
+        <a asp-action="Index" asp-controller="Home" class="btn btn-success">Back To Home</a>
+
+
+    </div>
+    <div class="col-6 text-right">
+        <h3>Total Amount:</h3>
+        <h3 id="total-amount checkout-text">
+            $
+            @Model.Sum(item => item.Price * (item.Quantity > 0 ? item.Quantity : 1))
+        </h3>
+        <a asp-area="Customer" asp-action="Checkout" asp-controller="Order" class="btn btn-info">Check Out</a>
+
+
+
+    </div>
+
+</div>
+
+
+
+

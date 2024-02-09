@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="row">
+    @foreach (var product in Model)
+    {
+        <div class="col-md-6 col-lg-4">
+            
+            <div class="custom-product-item">
+                <h4 class="custom-product-name">@product.Name</h4>
+                <img src="~/@product.Image" class="custom-product-image" alt="@product.Name" />
+                <div class="custom-product-details">
+                    <label class="custom-product-price">$@product.Price</label>
+                    <div class="custom-detail-button-container">
+                        <a asp-action="Detail" asp-controller="Home" asp-route-id="@product.Id" class="custom-product-detail-button">Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

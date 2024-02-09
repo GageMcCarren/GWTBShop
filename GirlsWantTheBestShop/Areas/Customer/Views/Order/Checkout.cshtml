@@ -1,0 +1,124 @@
+﻿@model GirlsWantTheBestShop.Models.CheckoutViewModel
+
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    List<Product> products = null;
+    string serializedProducts = HttpContextAccessor.HttpContext.Session.GetString("products");
+    if (!string.IsNullOrEmpty(serializedProducts))
+    {
+        products = System.Text.Json.JsonSerializer.Deserialize<List<Product>>(serializedProducts);
+    }
+    else
+    {
+        products = new List<Product>();
+    }
+}
+
+<br />
+<div class="form-container">
+    <h2 class="form-heading text-info">Order Details</h2>
+    <form asp-action="Checkout" method="post" enctype="multipart/form-data">
+
+        <div class="p-4 rounded border row">
+            <div asp-validation-summary="ModelOnly" class="text-danger">
+            </div>
+            <div class="col-6">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Order.Name"></label>
+                    </div>
+                    <div class="col-8">
+                        <input type="hidden" asp-for="Order.Id" />
+                        <input asp-for="Order.Name" class="form-control" />
+                        <span asp-validation-for="Order.Name" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Order.PhoneNo"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Order.PhoneNo" class="form-control" />
+                        <span asp-validation-for="Order.PhoneNo" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Order.Address"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="Order.Address" class="form-control" />
+                        <span asp-validation-for="Order.Address" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Order.Email"></label>
+                    </div>
+                    <div class="col-8">
+                        @*<select asp-for="ProductTypeId" asp-items="ViewBag.productTypeId" class="form-control"></select>*@
+                        <input asp-for="Order.Email" class="form-control" />
+                        <span asp-validation-for="Order.Email" class="text-danger"></span>
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Order.OrderDate"></label>
+                    </div>
+                    <div class="col-8">
+                        @*<select asp-for="SpecialTagId" asp-items="ViewBag.TagId" class="form-control"></select>*@
+                        <input asp-for="Order.OrderDate" type="date" readonly="readonly" class="form-control" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="Order.OrderDate" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="payment-info">
+                <h3>Payment Information</h3>
+                <div class="form-group">
+                    <label asp-for="CardNumber">Card Number</label>
+                    <input asp-for="CardNumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="CardHolderName">Name On Card</label>
+                    <input asp-for="CardHolderName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="ExpirationDate">Expiration Date</label>
+                    <input asp-for="ExpirationDate" class="form-control" type="month" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="CVV">CVV</label>
+                    <input asp-for="CVV" class="form-control" />
+                </div>
+
+
+                <div class="text-right">
+                    @{
+                        var totalPrice = products.Sum(c => c.Price * (c.Quantity > 0 ? c.Quantity : 1));
+                    }
+                    <h3>Total Price : @totalPrice.ToString("0.00")</h3>
+                </div>
+
+                <div class="form-group text-right">
+                    <input type="submit" value="Place Order" class="btn btn-success" />
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</div>
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    
+}

@@ -1,0 +1,72 @@
+﻿@model GirlsWantTheBestShop.HomeIndexViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="column-container">
+    
+        
+    <div class="column">
+                <div class="column-header">
+                    Gas Engines
+                </div>
+
+       
+
+            <div class="product-box-container">
+                
+                    @foreach (var product in Model.GasProducts)
+                    {
+
+
+                <a asp-action="Detail" asp-route-id="@product.Id" class="product-box-link">
+                    <div class="product-box">
+                        <div class="product-name">
+                            <p>@product.Name</p>
+                        </div>
+                       
+                    </div>
+                </a>
+
+
+
+
+
+                    }
+
+            </div>
+         
+       
+        
+
+    </div>
+    <div class="column">
+                <div class="column-header">
+                    Diesel Engines
+                </div>
+        <div class="product-box-container">
+
+            @foreach (var product in Model.DieselProducts)
+            {
+
+
+                <a asp-action="Detail" asp-route-id="@product.Id" class="product-box-link">
+                    <div class="product-box">
+                        <div class="product-name">
+                            <p>@product.Name</p>
+                        </div>
+
+                    </div>
+                </a>
+
+
+
+
+            }
+
+        </div>
+    </div>
+        
+ 
+</div>
