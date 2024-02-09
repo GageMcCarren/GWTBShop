@@ -4,8 +4,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
-
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+   
+    WebRootPath = Environment.GetEnvironmentVariable("PORT") != null ? $"http://*:{Environment.GetEnvironmentVariable("PORT")}" : null
+});
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("ContextDB") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
