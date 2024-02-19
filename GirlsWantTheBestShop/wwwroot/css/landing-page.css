@@ -385,8 +385,8 @@
     border: none;
     color: #e9759c;
     text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
-    font-size: 1.0vw;
-    padding: 10px 10px;
+    font-size: 1.2vw;
+    padding: 10px 15px;
     margin: 5px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
